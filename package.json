@@ -1,6 +1,6 @@
 {
   "name": "hyper-fela",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "hyperscript-style bindings for Fela",
   "main": "index.js",
   "scripts": {
