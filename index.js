@@ -22,7 +22,7 @@ function HyperFela ({ h, renderRule }) {
 
       // TODO should we handle if el is a string?
       // we could use createTextNode
-      el.classList.add(className)
+      if (className) el.classList.add(className)
 
       return el
     }
