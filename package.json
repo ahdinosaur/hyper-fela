@@ -42,6 +42,8 @@
     "tape": "^4.6.3"
   },
   "dependencies": {
-    "es2040": "^1.2.3"
+    "es2040": "^1.2.3",
+    "is-plain-object": "^2.0.1",
+    "typeof-is": "^1.0.1"
   }
 }

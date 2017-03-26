@@ -43,8 +43,8 @@ const Button = createStyledElement((props, children) => {
 }))
 
 // render all the things
-const button = Button({}, [
-  GreenSpan({}, [
+const button = Button([
+  GreenSpan([
     'click me!'
   ])
 ])
@@ -57,9 +57,25 @@ document.body.appendChild(button)
 
 ### `createStyledElement = hyperFela({ h, renderRule })`
 
-### `Element = createStyleElement(type, rule, options)`
+`h` is a `hyperscript`-compatible function of shape `(tagName, properties, children) => HTMLElment`.
 
-### `element = Element(properties, children)`
+`renderRule` is `fela.createRenderer().renderRule`.
+
+### `Element = createStyleElement([type], rule, [options])`
+
+(optional) `type` is either:
+
+- a [`tagName` string like 'div'](https://developer.mozilla.org/en-US/docs/Web/API/Element/tagName)
+- a function of shape `(properties, children) => h(...)`
+
+`rule` is either:
+
+- a `fela` rule (function that returns a style object)
+- a style object
+
+(optional) TODO `object`
+
+### `element = Element([properties], [children])`
 
 ## license
 
