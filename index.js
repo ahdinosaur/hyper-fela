@@ -84,7 +84,7 @@ function HyperFela ({ h, renderRule }) {
 
   function connectStyles (mapStylesToProps, Element) {
     return function StyledElement (properties, children) {
-      var styles = mapStylesToProps(properties, renderRule)
+      var styles = mapStylesToProps(properties)(renderRule)
       keys(styles).forEach(key => {
         if (is.function(styles[key])) {
           // if style is rule, render rule with element properties
