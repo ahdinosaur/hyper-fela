@@ -79,7 +79,7 @@ document.body.appendChild(button)
 
 (optional) `options` is object with keys:
 
-- `passThrough`: a list of props that get passed to the underlying element.
+- `passThrough`: a list of props that get passed to `h` when using a `tagName`.
 
 ### `element = Element([properties], [children])`
 

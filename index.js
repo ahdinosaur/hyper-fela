@@ -50,24 +50,27 @@ function HyperFela ({ h, renderRule }) {
       const {
         passThrough: instPassThrough = []
       } = properties
-
-      const passThrough = [
-        ...defaultPassThrough,
-        ...ctorPassThrough,
-        ...instPassThrough
-      ]
-
-      const elementProperties = passThrough
-      .reduce((sofar, key) => {
-        const value = properties[key]
-        if (!is.undefined(value)) sofar[key] = properties[key]
-        return sofar
-      }, {})
-
       const tagName = defined(properties.is, type)
-      const element = is.string(tagName)
-        ? h(tagName, elementProperties, children)
-        : type(elementProperties, children)
+
+      var element
+      if (is.string(tagName)) {
+        const passThrough = [
+          ...defaultPassThrough,
+          ...ctorPassThrough,
+          ...instPassThrough
+        ]
+
+        const tagProperties = passThrough
+        .reduce((sofar, key) => {
+          const value = properties[key]
+          if (!is.undefined(value)) sofar[key] = properties[key]
+          return sofar
+        }, {})
+
+        element = h(tagName, tagProperties, children)
+      } else {
+        element = type(properties, children)
+      }
 
       const className = renderRule(rule, properties)
 
