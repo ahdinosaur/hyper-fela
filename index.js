@@ -1,4 +1,4 @@
-const { assign } = Object
+const { keys, assign } = Object
 const isPlainObject = require('is-plain-object')
 const is = require('typeof-is')
 
@@ -84,7 +84,16 @@ function HyperFela ({ h, renderRule }) {
 
   function connectStyles (mapStylesToProps, Element) {
     return function StyledElement (properties, children) {
-      const styles = mapStylesToProps(properties, renderRule)
+      var styles = mapStylesToProps(properties, renderRule)
+      keys(styles).forEach(key => {
+        if (is.function(styles[key])) {
+          // if style is rule, render rule with element properties
+          styles[key] = renderRule(styles[key], properties)
+        } else if (is.object(styles[key])) {
+          // if style is object, render rule to return object
+          styles[key] = renderRule(() => styles[key])
+        }
+      })
       properties = assign({}, properties, { styles })
       return Element(properties, children)
     }
