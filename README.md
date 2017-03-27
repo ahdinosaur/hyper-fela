@@ -48,6 +48,7 @@ const button = Button([
     'click me!'
   ])
 ])
+
 document.body.appendChild(button)
 ```
 
@@ -56,6 +57,7 @@ document.body.appendChild(button)
 ### `hyperFela = require('hyper-fela')`
 
 ### `createStyledElement = hyperFela({ h, renderRule })`
+### `{ createStyledElement } = hyperFela({ h, renderRule })`
 
 `h` is a `hyperscript`-compatible function of shape `(tagName, properties, children) => HTMLElment`.
 
@@ -128,6 +130,55 @@ const element = Title({ is: 'h1' }, 'Hello World')
 // => <h1 className="a">Hello World</h1>
 ```
 
+### `{ connectStyles } = hyperFela({ h, renderRule })`
+
+### `Element = connectStyles(mapStylesToProps, Element)`
+
+```js
+const Header = ({ title, styles }) => {
+  return h('header', { className: styles.container }, [
+    h('h1', { className: styles.title }, [
+      title
+    ])
+  ])
+}
+
+const container = props => ({
+  textAlign: 'center',
+  padding: '20px',
+  height: '200px'
+})
+
+const title = props => ({
+  lineHeight: 1.2,
+  fontSize: props.fontSize,
+  color: props.color
+})
+
+// we use both the components props and
+// renderRule to compose our classNames
+const mapStylesToProps = props => renderer => ({
+  container: renderRule(container),
+  title: renderRule(title, {
+    fontSize: props.size + 'px',
+    color: props.color
+  })
+})
+
+Header = connect(mapStylesToProps, Header)
+
+const header = Header({
+  title: 'Hello World',
+  color: 'red',
+  size: 17
+})
+// =>
+// <header className="a b c">
+//   <h1 className="d e f">
+//     Hello World
+//   </h1>
+// </header>
+```
 
 ## license
 

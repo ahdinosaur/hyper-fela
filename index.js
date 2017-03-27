@@ -1,3 +1,4 @@
+const { assign } = Object
 const isPlainObject = require('is-plain-object')
 const is = require('typeof-is')
 
@@ -14,6 +15,11 @@ const defaultPassThrough = [
 module.exports = HyperFela
 
 function HyperFela ({ h, renderRule }) {
+  assign(createStyledElement, {
+    createStyledElement,
+    connectStyles
+  })
+
   return createStyledElement
 
   function createStyledElement (type, rule, options) {
@@ -73,6 +79,14 @@ function HyperFela ({ h, renderRule }) {
       }
 
       return element
+    }
+  }
+
+  function connectStyles (mapStylesToProps, Element) {
+    return function StyledElement (properties, children) {
+      const styles = mapStylesToProps(properties, renderRule)
+      properties = assign({}, properties, { styles })
+      return Element(properties, children)
     }
   }
 }
