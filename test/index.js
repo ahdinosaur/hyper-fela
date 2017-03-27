@@ -15,7 +15,7 @@ test('basic', function (t) {
   })
   function h (tag, props, childs) {
     t.equal(tag, 'div')
-    t.deepEqual(props, testProps)
+    t.deepEqual(props, {})
     t.equal(childs, 'test')
     return ELEMENT
   }
@@ -71,7 +71,7 @@ test('function type', function (t) {
   }
   const Element = hyperFela({ h, renderRule })
   const TestElement = (props, childs) => {
-    t.equal(props, testProps)
+    t.deepEqual(props, {})
     t.equal(childs, 'test')
     return ELEMENT
   }

@@ -73,9 +73,61 @@ document.body.appendChild(button)
 - a `fela` rule (function that returns a style object)
 - a style object
 
-(optional) TODO `object`
+(optional) `options` is object with keys:
+
+- `passThrough`: a list of props that get passed to the underlying element.
 
 ### `element = Element([properties], [children])`
+
+### `passThrough props`
+
+using the `passThrough` parameter allows us to pass propertiess to the underlying DOM element. this is helpful if you want to pass e.g. `events` such as `events.click`. there are some props that are automatically passed and thus do not need to be specified explicitly:
+
+- `className`
+- `id`
+- `className`
+- `events`
+- `attributes`
+- `style`
+- `hooks`
+- `data`
+
+if passing a `className`, it will automatically be concatenated with the Fela generated className. this allows composing multiple Fela elements.
+
+### dynamically passing props
+
+this use case is especially important for library owners. instead of passing the `passThrough` props to the `createStyleElement` call directly, one can also use the `passThrough` prop on the created element constructor to achieve the same effect.
+
+#### example
+
+```js
+const title = props => ({
+  color: 'red'
+})
+
+const Title = createStyleElement(title)
+
+const greet = () => alert('Hello World')
+
+const element = Title({ events: { click: greet } }, 'Hello World')
+// => <div className="a" onclick="...">Hello World</div>
+```
+
+## custom type on runtime
+
+to change the `type` on runtime and/or for each component, you may use the `is` prop.
+
+```js
+const title = props => ({
+  color: 'red'
+})
+
+const Title = createStyleElement(title)
+
+const element = Title({ is: 'h1' }, 'Hello World')
+// => <h1 className="a">Hello World</h1>
+```
+
 
 ## license
 
