@@ -1,6 +1,8 @@
 # hyper-fela
 
-hyperscript-style bindings for Fela
+[`hyperscript`](https://github.com/hyperhype/awesome-hyperscript)-style bindings for [`fela`](http://fela.js.org/)
+
+_API based on [`react-fela`](https://github.com/rofrischmann/fela/tree/master/packages/react-fela)_
 
 ```shell
 npm install --save hyper-fela
