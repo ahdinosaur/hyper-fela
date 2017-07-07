@@ -1,6 +1,6 @@
 const test = require('tape')
 
-const hyperFela = require('../')
+const hyperFela = require('../index.js')
 
 test('hyper-fela', function (t) {
   t.ok(hyperFela, 'module is require-able')
