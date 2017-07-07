@@ -1,6 +1,6 @@
 {
   "name": "hyper-fela",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "hyperscript-style bindings for Fela",
   "main": "dist/index.js",
   "scripts": {
@@ -14,9 +14,7 @@
     "build": "webpack"
   },
   "browserify": {
-    "transform": [
-      "es2040"
-    ]
+    "transform": ["es2040"]
   },
   "repository": {
     "type": "git",
