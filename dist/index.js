@@ -1,13 +1,109 @@
-!function(t){function n(e){if(r[e])return r[e].exports;var o=r[e]={i:e,l:!1,exports:{}};return t[e].call(o.exports,o,o.exports,n),o.l=!0,o.exports}var r={};n.m=t,n.c=r,n.d=function(t,r,e){n.o(t,r)||Object.defineProperty(t,r,{configurable:!1,enumerable:!0,get:e})},n.n=function(t){var r=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(r,"a",r),r},n.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},n.p="",n(n.s=0)}([function(t,n,r){"use strict";function e(t){if(Array.isArray(t)){for(var n=0,r=Array(t.length);n<t.length;n++)r[n]=t[n];return r}return Array.from(t)}function o(t){function n(t,n,r){function i(r,u){s(r)||(u=r,r={});var i=r,f=i.passThrough,y=void 0===f?[]:f,b=[].concat(l,e(d),e(y)),v=b.reduce(function(t,n){var e=r[n];return a.undefined(e)||(t[n]=r[n]),t},{}),h=c(r.is,t),g=a.string(h)?o(h,v,u):t(v,u),j=p(n,r);if(j){j.split(" ").forEach(function(t){return g.classList.add(t)})}return g}u(t)||(r=n,n=t,t="div"),r=c(r,{});var f=r,y=f.passThrough,d=void 0===y?[]:y;if(a.object(n)){var b=n;n=function(){return b}}return i}function r(t,n){return function(r,e){var o=t(r)(p);return i(o).forEach(function(t){a.function(o[t])?o[t]=p(o[t],r):a.object(o[t])&&(o[t]=p(function(){return o[t]}))}),r=f({},r,{styles:o}),n(r,e)}}var o=t.h,p=t.renderRule;return f(n,{createStyledElement:n,connectStyles:r}),n}function u(t){return a.string(t)||a.function(t)}function c(t,n){return a.undefined(t)?n:t}var i=Object.keys,f=Object.assign,s=r(1),a=r(3),l=["id","className","events","attributes","style","hooks","data"];t.exports=o},function(t,n,r){"use strict";function e(t){return!0===o(t)&&"[object Object]"===Object.prototype.toString.call(t)}/*!
- * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
- *
- * Copyright (c) 2014-2017, Jon Schlinkert.
- * Released under the MIT License.
- */
-var o=r(2);t.exports=function(t){var n,r;return!1!==e(t)&&("function"==typeof(n=t.constructor)&&(r=n.prototype,!1!==e(r)&&!1!==r.hasOwnProperty("isPrototypeOf")))}},function(t,n,r){"use strict";/*!
- * isobject <https://github.com/jonschlinkert/isobject>
- *
- * Copyright (c) 2014-2017, Jon Schlinkert.
- * Released under the MIT License.
- */
-t.exports=function(t){return null!=t&&"object"==typeof t&&!1===Array.isArray(t)}},function(t,n,r){"use strict";function e(t){return function(n){return typeof n===t}}["boolean","function","number","object","string","symbol","undefined"].forEach(function(t){n[t]=e(t)})}]);
+'use strict';
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var keys = Object.keys,
+    assign = Object.assign;
+
+var isPlainObject = require('is-plain-object');
+var is = require('typeof-is');
+
+var defaultPassThrough = ['id', 'className', 'events', 'attributes', 'style', 'hooks', 'data'];
+
+module.exports = function HyperFela(_ref) {
+  var h = _ref.h,
+      renderRule = _ref.renderRule;
+
+  assign(createStyledElement, {
+    createStyledElement: createStyledElement,
+    connectStyles: connectStyles
+  });
+
+  return createStyledElement;
+
+  function createStyledElement(type, rule, options) {
+    if (!isType(type)) {
+      options = rule;
+      rule = type;
+      type = 'div';
+    }
+
+    options = defined(options, {});
+    var _options = options,
+        _options$passThrough = _options.passThrough,
+        ctorPassThrough = _options$passThrough === undefined ? [] : _options$passThrough;
+
+
+    if (is.object(rule)) {
+      var style = rule;
+      rule = function rule() {
+        return style;
+      };
+    }
+
+    return StyledElement;
+
+    function StyledElement(properties, children) {
+      if (!isPlainObject(properties)) {
+        children = properties;
+        properties = {};
+      }
+
+      var _properties = properties,
+          _properties$passThrou = _properties.passThrough,
+          instPassThrough = _properties$passThrou === undefined ? [] : _properties$passThrou;
+
+
+      var passThrough = [].concat(defaultPassThrough, _toConsumableArray(ctorPassThrough), _toConsumableArray(instPassThrough));
+
+      var elementProperties = passThrough.reduce(function (sofar, key) {
+        var value = properties[key];
+        if (!is.undefined(value)) sofar[key] = properties[key];
+        return sofar;
+      }, {});
+
+      var tagName = defined(properties.is, type);
+      var element = is.string(tagName) ? h(tagName, elementProperties, children) : type(elementProperties, children);
+
+      var className = renderRule(rule, properties);
+
+      // TODO should we handle if el is a string?
+      // we could use createTextNode
+      if (className) {
+        var classNames = className.split(' ');
+        classNames.forEach(function (c) {
+          return element.classList.add(c);
+        });
+      }
+
+      return element;
+    }
+  }
+
+  function connectStyles(mapStylesToProps, Element) {
+    return function StyledElement(properties, children) {
+      var styles = mapStylesToProps(properties)(renderRule);
+      keys(styles).forEach(function (key) {
+        if (is.function(styles[key])) {
+          // if style is rule, render rule with element properties
+          styles[key] = renderRule(styles[key], properties);
+        } else if (is.object(styles[key])) {
+          // if style is object, render rule to return object
+          styles[key] = renderRule(function () {
+            return styles[key];
+          });
+        }
+      });
+      properties = assign({}, properties, { styles: styles });
+      return Element(properties, children);
+    };
+  }
+};
+
+function isType(value) {
+  return is.string(value) || is.function(value);
+}
+
+function defined(a, b) {
+  return !is.undefined(a) ? a : b;
+}
