@@ -12,7 +12,9 @@ const defaultPassThrough = [
   'data'
 ]
 
-module.exports = function HyperFela ({ h, renderRule }) {
+module.exports = HyperFela
+
+function HyperFela ({ h, renderRule }) {
   assign(createStyledElement, {
     createStyledElement,
     connectStyles
