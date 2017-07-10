@@ -11,7 +11,7 @@
     "test:coverage": "NODE_ENV=test nyc npm run test:node",
     "test:coverage:report": "nyc report --reporter=lcov npm run test:node",
     "test": "npm-run-all -s test:node test:lint test:deps",
-    "prepublish": "mkdir lib/ && babel index.js --out-file lib/index.js"
+    "prepublish": "babel index.js -d lib/"
   },
   "browserify": {
     "transform": ["es2040"]
