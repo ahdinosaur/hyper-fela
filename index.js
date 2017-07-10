@@ -30,9 +30,7 @@ function HyperFela ({ h, renderRule }) {
     }
 
     options = defined(options, {})
-    const {
-      passThrough: ctorPassThrough = []
-    } = options
+    const { passThrough: ctorPassThrough = [] } = options
 
     if (is.object(rule)) {
       const style = rule
@@ -47,9 +45,7 @@ function HyperFela ({ h, renderRule }) {
         properties = {}
       }
 
-      const {
-        passThrough: instPassThrough = []
-      } = properties
+      const { passThrough: instPassThrough = [] } = properties
 
       const passThrough = [
         ...defaultPassThrough,
@@ -57,8 +53,7 @@ function HyperFela ({ h, renderRule }) {
         ...instPassThrough
       ]
 
-      const elementProperties = passThrough
-      .reduce((sofar, key) => {
+      const elementProperties = passThrough.reduce((sofar, key) => {
         const value = properties[key]
         if (!is.undefined(value)) sofar[key] = properties[key]
         return sofar
@@ -105,5 +100,5 @@ function isType (value) {
 }
 
 function defined (a, b) {
-  return (!is.undefined(a)) ? a : b
+  return !is.undefined(a) ? a : b
 }

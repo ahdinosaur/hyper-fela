@@ -1,8 +1,8 @@
 {
   "name": "hyper-fela",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "hyperscript-style bindings for Fela",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "budo example:bundle.js -d example --live -- -d",
     "test:deps": "dependency-check . && dependency-check . --extra --no-dev -i es2040",
@@ -10,12 +10,11 @@
     "test:node": "NODE_ENV=test run-default tape test/*.js --",
     "test:coverage": "NODE_ENV=test nyc npm run test:node",
     "test:coverage:report": "nyc report --reporter=lcov npm run test:node",
-    "test": "npm-run-all -s test:node test:lint test:deps"
+    "test": "npm-run-all -s test:node test:lint test:deps",
+    "prepublish": "babel index.js -d lib/"
   },
   "browserify": {
-    "transform": [
-      "es2040"
-    ]
+    "transform": ["es2040"]
   },
   "repository": {
     "type": "git",
@@ -29,8 +28,18 @@
   },
   "homepage": "https://github.com/ahdinosaur/hyper-fela#readme",
   "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "budo": "^9.4.7",
     "dependency-check": "^2.7.0",
+    "eslint": "^4.2.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.1.0",
+    "eslint-plugin-standard": "^3.0.1",
     "fela": "^4.2.6",
     "fela-dom": "^4.2.6",
     "hyps": "^1.0.0",
@@ -38,7 +47,7 @@
     "npm-run-all": "^4.0.1",
     "nyc": "^10.1.2",
     "run-default": "^1.0.0",
-    "standard": "^8.6.0",
+    "standard": "^10.0.2",
     "tape": "^4.6.3"
   },
   "dependencies": {
