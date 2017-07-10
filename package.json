@@ -2,7 +2,7 @@
   "name": "hyper-fela",
   "version": "1.4.2",
   "description": "hyperscript-style bindings for Fela",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "budo example:bundle.js -d example --live -- -d",
     "test:deps": "dependency-check . && dependency-check . --extra --no-dev -i es2040",
@@ -11,7 +11,7 @@
     "test:coverage": "NODE_ENV=test nyc npm run test:node",
     "test:coverage:report": "nyc report --reporter=lcov npm run test:node",
     "test": "npm-run-all -s test:node test:lint test:deps",
-    "build": "babel index.js --out-file dist/index.js"
+    "prepublish": "mkdir lib/ && babel index.js --out-file lib/index.js"
   },
   "browserify": {
     "transform": ["es2040"]
@@ -33,7 +33,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "budo": "^9.4.7",
     "dependency-check": "^2.7.0",
-    "eslint": "^4.1.1",
+    "eslint": "^4.2.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.0",
@@ -54,8 +54,5 @@
     "es2040": "^1.2.3",
     "is-plain-object": "^2.0.1",
     "typeof-is": "^1.0.1"
-  },
-  "standard": {
-    "ignore": ["/dist/index.js"]
   }
 }
