@@ -1,4 +1,4 @@
-const hyperFela = require('./')
+const hyperFela = require('./index')
 const h = require('hyps')
 const { createRenderer } = require('fela')
 const { render } = require('fela-dom')
